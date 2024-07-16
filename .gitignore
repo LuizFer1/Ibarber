@@ -1,0 +1,15 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+data
+venv
+db.sqlite3
+media/pdfs/*
+media/csvs/*
+media/moldes/*
+.vscode
+fixtures/
+*/migrations/*
+!migrations/__init__.py
