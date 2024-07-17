@@ -13,3 +13,4 @@ media/moldes/*
 fixtures/
 */migrations/*
 !migrations/__init__.py
+*.env

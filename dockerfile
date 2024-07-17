@@ -1,20 +1,23 @@
 FROM python:3.11-alpine
 
+# Defina o diretório de trabalho
 WORKDIR /ibarber
 
+# Copie o arquivo de requisitos
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
+# Instale as dependências no ambiente virtual
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt 
 
-# isso é para copiar o restante do código-fonte do Workspace
+# Copie o restante do código-fonte do workspace
 COPY . .
 
-# porta que o django vai rodar em localhost
+# Exponha a porta que o Django vai rodar em localhost
 EXPOSE 8000
 
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+# Execute as migrações do Django
+RUN /bin/sh -c " python manage.py makemigrations && python manage.py migrate"
 
-
-
-
+# Comando de entrada padrão para o contêiner
+CMD ["/bin/sh", "-c", " python manage.py runserver 0.0.0.0:8000"]
