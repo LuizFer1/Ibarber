@@ -74,24 +74,25 @@ WSGI_APPLICATION = 'ibarber.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': "ibarber",
+        'USER': "postgres",
+        'PASSWORD': "1501", #coloque o password do seu postgres
+        'HOST': "localhost",  
+        'PORT': "5432"
     }
 }
-
-if config("LOCAL_POSTGRES", default=False):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': "ibarber",
-            'USER': "postgres",
-            'PASSWORD': "1501",
-            'HOST': "localhost",  
-            'PORT': "5432"
-        }
-}
+# dê o comando 'python manage.py migrate --run-syncdb'
 
 
 # Password validation
