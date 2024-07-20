@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 8000
 
 # Execute as migrações do Django
-RUN /bin/sh -c " python manage.py makemigrations && python manage.py migrate"
+RUN /bin/sh -c " python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py dumpdata > data.json && python manage.py loaddata data.json"
 
 # Comando de entrada padrão para o contêiner
 CMD ["/bin/sh", "-c", " python manage.py runserver 0.0.0.0:8000"]

@@ -17,5 +17,5 @@ services:
       POSTGRES_DB: ibarber
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1501
-    # ports:
-    #   - "5432:5432"
+    ports:
+      - "5432:5432"
