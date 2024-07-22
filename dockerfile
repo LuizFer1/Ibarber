@@ -1,5 +1,8 @@
 FROM python:3.11-alpine
 
+# Instalar dependências do sistema necessárias para compilar psycopg2
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+
 # Defina o diretório de trabalho
 WORKDIR /ibarber
 
@@ -15,9 +18,6 @@ COPY . .
 
 # Exponha a porta que o Django vai rodar em localhost
 EXPOSE 8000
-
-# Execute as migrações do Django
-RUN /bin/sh -c " python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py dumpdata > data.json && python manage.py loaddata data.json"
 
 # Comando de entrada padrão para o contêiner
 CMD ["/bin/sh", "-c", " python manage.py runserver 0.0.0.0:8000"]

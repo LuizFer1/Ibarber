@@ -1,21 +1,30 @@
-version: "4"
+version: '3.8'
 
 services:
-  web:
-    build:
-      context: .
-      dockerfile: dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/ibarber
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
   db:
-    image: bitnami/postgresql:latest
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ibarber
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1501
+
+  web:
+    build: .
+    command: sh -c "python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/ibarber
     ports:
-      - "5432:5432"
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_DB: ibarber
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1501
+      DB_HOST: db
+      DB_PORT: 5432
+
+volumes:
+  postgres_data:
